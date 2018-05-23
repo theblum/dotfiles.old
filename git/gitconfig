@@ -1,0 +1,9 @@
+[user]
+	name = Brian Blumberg
+	email = blum@disroot.org
+[core]
+	editor = emacsclient -a ''
+[color]
+	ui = auto
+[credential]
+	helper = store
