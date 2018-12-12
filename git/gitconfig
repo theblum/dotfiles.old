@@ -2,7 +2,7 @@
 	name = Brian Blumberg
 	email = blum@disroot.org
 [core]
-	editor = emacsclient -a ''
+	editor = nvim
 [color]
 	ui = auto
 [credential]

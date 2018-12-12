@@ -1,0 +1,176 @@
+## i3 Config ##
+
+set $mod Mod4
+floating_modifier $mod
+
+## System ##
+
+bindsym $mod+Shift+c reload
+bindsym $mod+Shift+r restart
+
+set $mode_system System (l) lock, (e) logout, (r) reboot, (s) shutdown
+mode "$mode_system" {
+    bindsym l exec --no-startup-id i3lock -c 000000, mode "default"
+    bindsym e exec --no-startup-id i3-msg exit, mode "default"
+    bindsym r exec --no-startup-id systemctl reboot, mode "default"
+    bindsym s exec --no-startup-id systemctl poweroff, mode "default"
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+    bindsym $mod+Pause mode "default"
+}
+
+bindsym $mod+Pause mode "$mode_system"
+
+## Bindings ##
+
+bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+p exec rofi -show run
+
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+bindsym $mod+bracketright split h
+bindsym $mod+bracketleft split v
+
+bindsym $mod+f fullscreen toggle
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+space focus mode_toggle
+
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+bindsym $mod+a focus parent
+bindsym $mod+d focus child
+
+bindsym $mod+m mark marked
+bindsym $mod+Shift+m unmark marked
+bindsym $mod+n swap mark marked
+
+bindsym $mod+Shift+minus move scratchpad
+bindsym $mod+minus scratchpad show; resize set 1024 768; move position center
+
+## Workspaces ##
+
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+set $screen_primary   HDMI-0
+set $screen_secondary DVI-I-0
+
+workspace $ws1 output $screen_primary
+workspace $ws2 output $screen_secondary
+workspace $ws3 output $screen_primary
+workspace $ws4 output $screen_secondary
+workspace $ws5 output $screen_primary
+workspace $ws6 output $screen_secondary
+
+exec --no-startup-id i3-msg workspace $ws1
+
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+bindsym $mod+0 workspace $ws10
+
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9
+bindsym $mod+Shift+0 move container to workspace $ws10
+
+## Windows ##
+
+for_window [window_role="pop-up"]      floating enable
+for_window [window_role="task_dialog"] floating enable
+
+for_window [class="a.out"]             floating enable
+for_window [class="mpv"]               floating enable
+for_window [class="Pavucontrol"]       floating enable
+for_window [class="Display"]           floating enable
+
+for_window [class="Skrytch"]           floating enable;
+for_window [instance="lldbrun"]        floating enable;
+for_window [instance="lldbrun"]        resize set 1024 768;
+for_window [instance="lldbrun"]        move position center;
+for_window [instance="gdbrun"]        floating enable;
+for_window [instance="gdbrun"]        resize set 1024 768;
+for_window [instance="gdbrun"]        move position center;
+
+exec_always --no-startup-id ~/.config/i3/polybar_launch.sh
+
+set $mode_resize Resize
+mode "$mode_resize" {
+    bindsym h resize shrink width 10 px or 10 ppt
+    bindsym j resize grow height 10 px or 10 ppt
+    bindsym k resize shrink height 10 px or 10 ppt
+    bindsym l resize grow width 10 px or 10 ppt
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+    bindsym $mod+r mode "default"
+}
+
+bindsym $mod+r mode "$mode_resize"
+bindsym $mod+q kill
+
+## UI ##
+
+focus_follows_mouse no
+mouse_warping none
+
+## Theme ##
+
+set_from_resource $black   i3wm.color0 #000000
+set_from_resource $red     i3wm.color1 #ff0000
+set_from_resource $green   i3wm.color2 #00ff00
+set_from_resource $yellow  i3wm.color3 #ffff00
+set_from_resource $blue    i3wm.color4 #0000ff
+set_from_resource $magenta i3wm.color5 #ff00ff
+set_from_resource $cyan    i3wm.color6 #00ffff
+set_from_resource $white   i3wm.color7 #ffffff
+
+set_from_resource $fontface i3wm.fontface Monospace
+set_from_resource $fontsize i3wm.fontsize 12
+
+font pango:$fontface $fontsize
+
+gaps inner 20
+gaps outer 40
+
+default_border pixel 2
+default_floating_border pixel 2
+
+# <colorclass>          <border>       <background>       <text>       <indicator>
+client.focused          $yellow        $yellow            $white       $blue
+client.focused_inactive $green         $green             $white       $green
+client.unfocused        $blue          $blue              $white       $blue
+client.urgent           $red           $red               $white       $red
+
+# vim:filetype=i3

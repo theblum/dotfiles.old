@@ -2,8 +2,13 @@
 !! ~/.Xresources
 !!
 
-#define font01     Iosevka Light
-#define fontsize01 12
+#define fontface01 Iosevka Light
+#define fontface02 Iosevka
+#define fontface03 Iosevka Light Oblique
+
+#define fontsize01 11
+
+#define fontpowerline xft:PowerlineSymbols:antialias=true:size=fontsize01
 
 !! Xft
 
@@ -23,13 +28,15 @@ URxvt*scrollTtyOutput:       false
 URxvt*scrollTtyKeypress:     true
 URxvt*scrollWithBuffer:      true
 URxvt*saveLines:             4096
-URxvt*font:                  xft:font01:antialias=true:size=fontsize01
-URxvt*boldFont:              xft:font01:bold:antialias=true:size=fontsize01
+URxvt*font:                  xft:fontface01:antialias=true:size=fontsize01, fontpowerline
+URxvt*boldFont:              xft:fontface02:antialias=true:size=fontsize01, fontpowerline
+URxvt*italicFont:            xft:fontface03:antialias=true:size=fontsize01, fontpowerline
 URxvt*letterSpace:           0
 URxvt*lineSpace:             1
 URxvt*loginShell:            true
 URxvt*intensityStyles:       true
-URxvt*perl-ext-common:       default,-searchable-scrollback,clipboard,keyboard-select,url-select,vtwheel
+URxvt*perl-ext-common:       default,-searchable-scrollback,clipboard,keyboard-select,resize-font,url-select,vtwheel
+URxvt*resize-font.step:      1
 URxvt*keysym.M-C-c:          clipboard:copy
 URxvt*keysym.M-C-v:          clipboard:paste
 URxvt*keysym.M-v:            clipboard:paste_escaped
@@ -43,15 +50,17 @@ URxvt*cursorBlink:           true
 URxvt*depth:                 32
 URxvt*shading:               26
 
+!#define fontsize02 12
+!#define fontsize03 14
+!#define fontsize04 16
+!URxvt*keysym.M-C-1:          command:\033]710;xft:fontface01:antialias=true:size=fontsize01\007\033]711;xft:fontface02:antialias=true:size=fontsize01\007
+!URxvt*keysym.M-C-2:          command:\033]710;xft:fontface01:antialias=true:size=fontsize02\007\033]711;xft:fontface02:antialias=true:size=fontsize02\007
+!URxvt*keysym.M-C-3:          command:\033]710;xft:fontface01:antialias=true:size=fontsize03\007\033]711;xft:fontface02:antialias=true:size=fontsize03\007
+!URxvt*keysym.M-C-4:          command:\033]710;xft:fontface01:antialias=true:size=fontsize04\007\033]711;xft:fontface02:antialias=true:size=fontsize04\007
+
+!! i3wm
+i3wm.fontface:               fontface01
+i3wm.fontsize:               fontsize01
+
 !#define background_opacity 95
 #include ".config/base16-xresources/xresources/base16-material-256.Xresources"
-
-blum.fg1:    base05
-blum.fg2:    base07
-blum.bg1:    base00
-blum.bg2:    base03
-blum.accent: base0D
-blum.error:  base08
-blum.fnt:    font01
-blum.fntsz:  fontsize01
-
