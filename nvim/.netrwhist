@@ -1,5 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =3
-let g:netrw_dirhist_1='/home/blum'
-let g:netrw_dirhist_2='/home/blum/dox/Larian Studios/Divinity Original Sin 2 Definitive Edition/PlayerProfiles/Skrytch'
-let g:netrw_dirhist_3='/home/blum'

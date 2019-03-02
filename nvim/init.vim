@@ -48,7 +48,8 @@ if dein#load_state(expand(b:plugin_directory))
     call dein#add('tpope/vim-unimpaired')
     call dein#add('tpope/vim-vinegar')
     call dein#add('tomtom/tcomment_vim')
-    call dein#add('junegunn/fzf.vim')
+    call dein#add('junegunn/fzf', { 'merged' : 0 })
+    call dein#add('junegunn/fzf.vim', { 'depends' : 'fzf' })
     call dein#add('junegunn/limelight.vim')
     call dein#add('junegunn/goyo.vim')
     call dein#add('derekwyatt/vim-fswitch')
@@ -76,7 +77,7 @@ syntax enable
 
 set autowrite
 set background=dark
-set colorcolumn=101
+set colorcolumn=+1
 set complete=.,w,b,u,i,d,t
 set completeopt=menu
 set confirm
@@ -114,6 +115,7 @@ set smartindent
 set softtabstop=4
 set splitbelow
 set splitright
+set textwidth=100
 set wildmenu
 set wildmode=list:longest
 
@@ -251,8 +253,8 @@ function! s:load_cscope()
     endif
 endfunction
 
-" autocmd! User GoyoEnter nested call <SID>goyo_enter()
-" autocmd! User GoyoLeave nested call <SID>goyo_leave()
+autocmd! User GoyoEnter nested call <SID>goyo_enter()
+autocmd! User GoyoLeave nested call <SID>goyo_leave()
 
 " airline
 let g:airline_powerline_fonts = 1
@@ -284,6 +286,9 @@ nnoremap <silent> <Leader>sv :so $MYVIMRC<CR>
 " edit i3 config file
 nnoremap <silent> <Leader>ei :e ~/.config/i3/config<CR>
 
+" edit dwm config file
+nnoremap <silent> <Leader>ed :e ~/dtf/dwm/config.h<CR>
+
 " edit zsh config file
 nnoremap <silent> <Leader>ez :e ~/.zshrc<CR>
 
@@ -307,9 +312,13 @@ nnoremap gV `[v`]
 nnoremap <Leader>ff :Files<CR>
 nnoremap <Leader>fg :Find 
 nnoremap <Leader>fd "zyiw:execute "Find " . @z<CR>
+nnoremap <Leader>fb :Buffers<CR>
 
 " toggle goyo
 nnoremap <Leader>ng :Goyo<CR>
+
+" toggle limelight
+nnoremap <Leader>nl :Limelight!!<CR>
 
 " deoplete
 inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
