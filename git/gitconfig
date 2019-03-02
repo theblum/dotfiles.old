@@ -3,7 +3,11 @@
 	email = blum@disroot.org
 [core]
 	editor = nvim
+[push]
+	default = simple
+[diff]
+	tool = nvim -d
 [color]
 	ui = auto
-[credential]
-	helper = store
+[commit]
+	verbose = true
