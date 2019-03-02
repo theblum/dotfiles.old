@@ -39,13 +39,13 @@ if [ -d ~/.xinitrc.d ] ; then
   unset f
 fi
 
-#setxkbmap -option "ctrl:swapcaps"
-setxkbmap -option "ctrl:nocaps"
-#xcape
-xsetroot -cursor_name left_ptr
-hsetroot -fill /home/blum/pix/blue.gradient.png
 xrandr --output HDMI-0 --primary --mode 1920x1080 --rate 60 --output DVI-I-0 --mode 1920x1080 --rate 60 --right-of HDMI-0
+setxkbmap -option "ctrl:nocaps"
+xsetroot -cursor_name left_ptr
+hsetroot -fill /usr/share/backgrounds/archlinux/archlinux-aftermath.jpg
 compton --daemon
+#dwm-status --daemon
+pasystray &
 
 xsetwacom --set "Wacom Intuos BT S Pen stylus" MapToOutput HEAD-1
 xsetwacom --set "Wacom Intuos BT S Pen eraser" MapToOutput HEAD-1
@@ -64,3 +64,4 @@ xsetwacom --set "Wacom Intuos BT S Pen stylus" Button 3 2
 
 # start window manager
 exec i3 2>&1 >~/.i3.log
+#exec dwm 2>&1 >~/.dwm.log

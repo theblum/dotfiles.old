@@ -6,9 +6,11 @@
 #define fontface02 Iosevka
 #define fontface03 Iosevka Light Oblique
 
-#define fontsize01 11
+#define fontsize01 12
 
 #define fontpowerline xft:PowerlineSymbols:antialias=true:size=fontsize01
+
+#include ".config/base16-xresources/xresources/base16-material-256.Xresources"
 
 !! Xft
 
@@ -27,10 +29,10 @@ URxvt*scrollstyle:           plain
 URxvt*scrollTtyOutput:       false
 URxvt*scrollTtyKeypress:     true
 URxvt*scrollWithBuffer:      true
-URxvt*saveLines:             4096
-URxvt*font:                  xft:fontface01:antialias=true:size=fontsize01, fontpowerline
-URxvt*boldFont:              xft:fontface02:antialias=true:size=fontsize01, fontpowerline
-URxvt*italicFont:            xft:fontface03:antialias=true:size=fontsize01, fontpowerline
+URxvt*saveLines:             10000
+URxvt*font:                  xft:fontface01:antialias=true:size=fontsize01,fontpowerline
+URxvt*boldFont:              xft:fontface02:antialias=true:size=fontsize01,fontpowerline
+URxvt*italicFont:            xft:fontface03:antialias=true:size=fontsize01,fontpowerline
 URxvt*letterSpace:           0
 URxvt*lineSpace:             1
 URxvt*loginShell:            true
@@ -49,6 +51,7 @@ URxvt*url-select.underline:  true
 URxvt*cursorBlink:           true
 URxvt*depth:                 32
 URxvt*shading:               26
+URxvt*background:            [95]base00
 
 !#define fontsize02 12
 !#define fontsize03 14
@@ -61,6 +64,3 @@ URxvt*shading:               26
 !! i3wm
 i3wm.fontface:               fontface01
 i3wm.fontsize:               fontsize01
-
-!#define background_opacity 95
-#include ".config/base16-xresources/xresources/base16-material-256.Xresources"
