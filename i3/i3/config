@@ -10,7 +10,7 @@ bindsym $mod+Shift+r restart
 
 set $mode_system System (l) lock, (e) logout, (r) reboot, (s) shutdown
 mode "$mode_system" {
-    bindsym l exec --no-startup-id i3lock -c 000000, mode "default"
+    bindsym l exec --no-startup-id i3lockwrapper -c 000000, mode "default"
     bindsym e exec --no-startup-id i3-msg exit, mode "default"
     bindsym r exec --no-startup-id systemctl reboot, mode "default"
     bindsym s exec --no-startup-id systemctl poweroff, mode "default"
@@ -56,7 +56,22 @@ bindsym $mod+Shift+m unmark marked
 bindsym $mod+n swap mark marked
 
 bindsym $mod+Shift+minus move scratchpad
-bindsym $mod+minus scratchpad show; resize set 1024 768; move position center
+bindsym $mod+minus scratchpad show; move position center
+
+set $mode_resize Resize
+mode "$mode_resize" {
+    bindsym h resize shrink width 5 px or 5 ppt
+    bindsym j resize grow height 5 px or 5 ppt
+    bindsym k resize shrink height 5 px or 5 ppt
+    bindsym l resize grow width 5 px or 5 ppt
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+    bindsym $mod+r mode "default"
+}
+
+bindsym $mod+r mode "$mode_resize"
+bindsym $mod+q kill
 
 ## Workspaces ##
 
@@ -125,24 +140,9 @@ for_window [instance="gdbrun"]        move position center;
 
 exec_always --no-startup-id ~/.config/i3/polybar_launch.sh
 
-set $mode_resize Resize
-mode "$mode_resize" {
-    bindsym h resize shrink width 10 px or 10 ppt
-    bindsym j resize grow height 10 px or 10 ppt
-    bindsym k resize shrink height 10 px or 10 ppt
-    bindsym l resize grow width 10 px or 10 ppt
-
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-    bindsym $mod+r mode "default"
-}
-
-bindsym $mod+r mode "$mode_resize"
-bindsym $mod+q kill
-
 ## UI ##
 
-focus_follows_mouse no
+focus_follows_mouse yes
 mouse_warping none
 
 ## Theme ##
@@ -162,15 +162,15 @@ set_from_resource $fontsize i3wm.fontsize 12
 font pango:$fontface $fontsize
 
 gaps inner 20
-gaps outer 40
+gaps outer 10
 
 default_border pixel 2
 default_floating_border pixel 2
 
 # <colorclass>          <border>       <background>       <text>       <indicator>
-client.focused          $yellow        $yellow            $white       $blue
-client.focused_inactive $green         $green             $white       $green
-client.unfocused        $blue          $blue              $white       $blue
+client.focused          $blue          $blue              $white       $green
+client.focused_inactive $yellow        $yellow            $white       $yellow
+client.unfocused        $green         $green             $white       $green
 client.urgent           $red           $red               $white       $red
 
 # vim:filetype=i3
