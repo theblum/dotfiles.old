@@ -1,111 +1,71 @@
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
-
-# Path to your oh-my-zsh installation.
-export ZSH="/home/blum/.oh-my-zsh"
-
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="flazz"
-
-# Set list of themes to pick from when loading at random
-# Setting this variable when ZSH_THEME=random will cause zsh to load
-# a theme from this variable instead of looking in ~/.oh-my-zsh/themes/
-# If set to an empty array, this variable will have no effect.
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
-
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
-
-# Uncomment the following line to use hyphen-insensitive completion.
-# Case-sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
-
-# Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
-
-# Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
-
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
-
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# You can set one of the optional three formats:
-# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# or set a custom format using the strftime function format specifications,
-# see 'man strftime' for details.
-# HIST_STAMPS="mm/dd/yyyy"
-
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
-
-# Which plugins would you like to load?
-# Standard plugins can be found in ~/.oh-my-zsh/plugins/*
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(
-  archlinux
-  colored-man-pages
-  colorize
-  command-not-found
-  cp
-  extract
-  fzf
-  git
-  systemd
-  themes
-  vi-mode
-)
-
-source $ZSH/oh-my-zsh.sh
-
-## User configuration
-
-EDITOR="nvim"
-VISUAL="nvim"
+HISTFILE="$HOME/.histfile"
+HISTSIZE=1000
+SAVEHIST=1000
 KEYTIMEOUT=10
-SUDO_ASKPASS="/usr/lib/ssh/ssh-askpass"
-SUDO_EDITOR="nvim"
-LESS=" -Ri "
-LESSOPEN="|pygmentize -g %s"
-MANPAGER="less"
-SBCL_HOME='/usr/lib/sbcl'
-FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*"'
-export EDITOR VISUAL KEYTIMEOUT SUDO_ASKPASS SUDO_EDITOR LESS LESSOPEN MANPAGER SBCL_HOME FZF_DEFAULT_COMMAND
 
-alias vim="nvim"
-alias q="exit"
+export EDITOR='nvim'
+export VISUAL='nvim'
+export SUDO_ASKPASS='/usr/lib/ssh/ssh-askpass'
+export SUDO_EDITOR='nvim'
+export LESS=' -Ri '
+export LESSOPEN='|pygmentize -g %s'
+export MANPAGER='less'
+export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*"'
 
+setopt autocd
+setopt beep
+setopt extendedglob
+setopt inc_append_history
+setopt nomatch
+setopt notify
+setopt share_history
+
+zstyle :compinstall filename "$HOME/.zshrc"
+zstyle ':completion:*' rehash true
+zstyle ':completion:*' menu select
+zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' '+l:|=* r:|=*'
+autoload -Uz compinit promptinit
+compinit
+promptinit
+
+bindkey -v
 bindkey -M viins 'jk' vi-cmd-mode
 
-zstyle ":completion:*:commands" rehash true
+zmodload zsh/complist
+bindkey -M menuselect 'h' vi-backward-char
+bindkey -M menuselect 'j' vi-down-line-or-history
+bindkey -M menuselect 'k' vi-up-line-or-history
+bindkey -M menuselect 'l' vi-forward-char
+
+prompt pure
+
+alias c='cat'
+alias ls='ls --color=auto'
+alias l='ls'
+alias la='ls -la'
+alias ll='ls -l'
+alias vim='nvim'
+alias q='exit'
+
+alias Psyu='sudo pacman -Syu'
+alias Psyy='sudo pacman -Syy'
+alias Ps='sudo pacman -S'
+alias Prsn='sudo pacman -Rsn'
+alias Pu='sudo pacman -U'
+alias Pss='pacman -Ss'
+alias Psi='pacman -Si'
+alias Pqi='pacman -Qi'
+alias Pql='pacman -Ql'
 
 # base16-shell
-BASE16_SHELL="$HOME/.config/base16-shell/"
+BASE16_SHELL="$HOME/.config/base16-shell"
+BASE16_SHELL_SET_BACKGROUND="false"
 [ -n "$PS1" ] && \
     [ -s "$BASE16_SHELL/profile_helper.sh" ] && \
     eval "$("$BASE16_SHELL/profile_helper.sh")"
 
-stty -ixon
+# command-not-found (pkgfile)
+source /usr/share/doc/pkgfile/command-not-found.zsh
 
-# Run neofetch on terminal start
+# neofetch
 neofetch
