@@ -3,6 +3,7 @@ HISTSIZE=1000
 SAVEHIST=1000
 KEYTIMEOUT=10
 
+export BROWSER='qutebrowser'
 export EDITOR='nvim'
 export VISUAL='nvim'
 export SUDO_ASKPASS='/usr/lib/ssh/ssh-askpass'
@@ -41,10 +42,10 @@ prompt pure
 
 alias c='cat'
 alias ls='ls --color=auto'
-alias l='ls'
-alias la='ls -la'
-alias ll='ls -l'
-alias vim='nvim'
+alias l='lsd'
+alias la='lsd -a'
+alias ll='lsd -l'
+alias lla='lsd -la'
 alias q='exit'
 
 alias Psyu='sudo pacman -Syu'
@@ -56,6 +57,9 @@ alias Pss='pacman -Ss'
 alias Psi='pacman -Si'
 alias Pqi='pacman -Qi'
 alias Pql='pacman -Ql'
+alias Pqm='pacman -Qm'
+alias Pqmq='pacman -Qmq'
+alias Pqdt='pacman -Qdt'
 
 # base16-shell
 BASE16_SHELL="$HOME/.config/base16-shell"
