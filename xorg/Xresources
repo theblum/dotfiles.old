@@ -2,13 +2,11 @@
 !! ~/.Xresources
 !!
 
-#define fontface01 Iosevka Light
-#define fontface02 Iosevka
-#define fontface03 Iosevka Light Oblique
+#define fontface01 Iosevka Nerd Font Mono:style=Light
+#define fontface02 Iosevka Nerd Font Mono:style=Medium
+#define fontface03 Iosevka Nerd Font Mono:style=Light Italic
 
 #define fontsize01 12
-
-#define fontpowerline xft:PowerlineSymbols:antialias=true:size=fontsize01
 
 #include ".config/base16-xresources/xresources/base16-material-256.Xresources"
 
@@ -30,9 +28,9 @@ URxvt*scrollTtyOutput:       false
 URxvt*scrollTtyKeypress:     true
 URxvt*scrollWithBuffer:      true
 URxvt*saveLines:             10000
-URxvt*font:                  xft:fontface01:antialias=true:size=fontsize01,fontpowerline
-URxvt*boldFont:              xft:fontface02:antialias=true:size=fontsize01,fontpowerline
-URxvt*italicFont:            xft:fontface03:antialias=true:size=fontsize01,fontpowerline
+URxvt*font:                  xft:fontface01:antialias:size=fontsize01
+URxvt*boldFont:              xft:fontface02:antialias:size=fontsize01
+URxvt*italicFont:            xft:fontface03:antialias:size=fontsize01
 URxvt*letterSpace:           0
 URxvt*lineSpace:             1
 URxvt*loginShell:            true
