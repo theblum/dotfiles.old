@@ -56,7 +56,7 @@ bindsym $mod+Shift+m unmark marked
 bindsym $mod+n swap mark marked
 
 bindsym $mod+Shift+minus move scratchpad
-bindsym $mod+minus scratchpad show; move position center
+bindsym $mod+minus scratchpad show
 
 set $mode_resize Resize
 mode "$mode_resize" {
