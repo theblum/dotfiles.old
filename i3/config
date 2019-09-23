@@ -24,7 +24,8 @@ bindsym $mod+Pause mode "$mode_system"
 
 ## Bindings ##
 
-bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Return exec urxvtc -e tmux
+bindsym $mod+Shift+Return exec urxvtc
 bindsym $mod+p exec rofi -show run
 
 bindsym $mod+h focus left
@@ -37,12 +38,23 @@ bindsym $mod+Shift+j move down
 bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
 
+bindsym $mod+Control+h resize grow left 5 px or 5 ppt
+bindsym $mod+Control+j resize grow down 5 px or 5 ppt
+bindsym $mod+Control+k resize grow up   5 px or 5 ppt
+bindsym $mod+Control+l resize grow right 5 px or 5 ppt
+bindsym $mod+Shift+Control+h resize shrink left 5 px or 5 ppt
+bindsym $mod+Shift+Control+j resize shrink down 5 px or 5 ppt
+bindsym $mod+Shift+Control+k resize shrink up 5 px or 5 ppt
+bindsym $mod+Shift+Control+l resize shrink right 5 px or 5 ppt
+
 bindsym $mod+bracketright split h
 bindsym $mod+bracketleft split v
 
 bindsym $mod+f fullscreen toggle
 bindsym $mod+Shift+space floating toggle
 bindsym $mod+space focus mode_toggle
+
+bindsym $mod+c move position center
 
 bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
@@ -55,23 +67,19 @@ bindsym $mod+m mark marked
 bindsym $mod+Shift+m unmark marked
 bindsym $mod+n swap mark marked
 
-bindsym $mod+Shift+minus move scratchpad
-bindsym $mod+minus scratchpad show
+bindsym $mod+Shift+minus mark "scratchterm", move scratchpad
+bindsym $mod+minus [con_mark="scratchterm"] scratchpad show
+bindsym $mod+Shift+Control+minus mark "scratch1", move scratchpad
+bindsym $mod+Control+minus [con_mark="scratch1"] scratchpad show
 
-set $mode_resize Resize
-mode "$mode_resize" {
-    bindsym h resize shrink width 5 px or 5 ppt
-    bindsym j resize grow height 5 px or 5 ppt
-    bindsym k resize shrink height 5 px or 5 ppt
-    bindsym l resize grow width 5 px or 5 ppt
-
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-    bindsym $mod+r mode "default"
-}
-
-bindsym $mod+r mode "$mode_resize"
 bindsym $mod+q kill
+bindsym --whole-window $mod+button2 kill
+
+bindsym $mod+Left      exec --no-startup-id playerctl previous
+bindsym $mod+Right     exec --no-startup-id playerctl next
+bindsym $mod+KP_Enter  exec --no-startup-id playerctl play-pause
+bindsym $mod+Up        exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym $mod+Down      exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%
 
 ## Workspaces ##
 
@@ -96,7 +104,7 @@ workspace $ws4 output $screen_secondary
 workspace $ws5 output $screen_primary
 workspace $ws6 output $screen_secondary
 
-exec --no-startup-id i3-msg workspace $ws1
+exec --no-startup-id i3-msg --quiet workspace $ws1
 
 bindsym $mod+1 workspace $ws1
 bindsym $mod+2 workspace $ws2
@@ -124,21 +132,29 @@ bindsym $mod+Shift+0 move container to workspace $ws10
 
 for_window [window_role="pop-up"]      floating enable
 for_window [window_role="task_dialog"] floating enable
+for_window [floating]                  move position center
 
-for_window [class="a.out"]             floating enable
+for_window [class=".*_debug"]          floating enable
 for_window [class="mpv"]               floating enable
 for_window [class="Pavucontrol"]       floating enable
+for_window [class="Cadence"]           floating enable
+for_window [class="Lxappearance"]      floating enable
+for_window [class="Blockify"]          floating enable
 for_window [class="Display"]           floating enable
+for_window [class="Minecraft.*"]       floating enable
 
-for_window [class="Skrytch"]           floating enable;
-for_window [instance="lldbrun"]        floating enable;
-for_window [instance="lldbrun"]        resize set 1024 768;
-for_window [instance="lldbrun"]        move position center;
-for_window [instance="gdbrun"]        floating enable;
-for_window [instance="gdbrun"]        resize set 1024 768;
-for_window [instance="gdbrun"]        move position center;
+for_window [instance="qemu.*"]         floating enable
+
+for_window [class="Skrytch"]           floating enable
+for_window [instance="lldbrun"]        floating enable
+for_window [instance="lldbrun"]        resize set 1024 768
+for_window [instance="lldbrun"]        move position center
+for_window [instance="gdbrun"]         floating enable
+for_window [instance="gdbrun"]         resize set 1024 768
+for_window [instance="gdbrun"]         move position center
 
 exec_always --no-startup-id ~/.config/i3/polybar_launch.sh
+exec_always --no-startup-id ~/.config/i3/ci3ipc_launch.sh
 
 ## UI ##
 
@@ -157,20 +173,20 @@ set_from_resource $cyan    i3wm.color6 #00ffff
 set_from_resource $white   i3wm.color7 #ffffff
 
 set_from_resource $fontface i3wm.fontface Monospace
-set_from_resource $fontsize i3wm.fontsize 12
+set_from_resource $fontsize i3wm.fontsize 9
 
 font pango:$fontface $fontsize
 
 gaps inner 20
-gaps outer 10
+gaps horizontal 30
 
-default_border pixel 2
-default_floating_border pixel 2
+default_border pixel 1
+default_floating_border pixel 1
 
 # <colorclass>          <border>       <background>       <text>       <indicator>
 client.focused          $blue          $blue              $white       $green
-client.focused_inactive $yellow        $yellow            $white       $yellow
-client.unfocused        $green         $green             $white       $green
+client.focused_inactive $yellow        $yellow            $black       $yellow
+client.unfocused        $green         $green             $black       $green
 client.urgent           $red           $red               $white       $red
 
 # vim:filetype=i3
