@@ -2,16 +2,16 @@
 !! ~/.Xresources
 !!
 
-#define fontface01 Iosevka Nerd Font Mono:style=Light
-#define fontface02 Iosevka Nerd Font Mono:style=Medium
-#define fontface03 Iosevka Nerd Font Mono:style=Light Italic
+#define fontface01 Iosevka Nerd Font Mono:style=Light:antialias
+#define fontface02 Iosevka Nerd Font Mono:style=Medium:antialias
+#define fontface03 Iosevka Nerd Font Mono:style=Light Italic:antialias
 
-#define fontsize01 12
+#define fontsize01 10
+#define fontsize02 9
 
 #include ".config/base16-xresources/xresources/base16-material-256.Xresources"
 
 !! Xft
-
 Xft.dpi:                     96
 Xft.antialias:               true
 Xft.rgba:                    rgb
@@ -21,16 +21,15 @@ Xft.autohint:                true
 Xft.lcdfilter:               lcddefault
 
 !! URxvt
-
 URxvt*scrollBar:             false
 URxvt*scrollstyle:           plain
 URxvt*scrollTtyOutput:       false
 URxvt*scrollTtyKeypress:     true
 URxvt*scrollWithBuffer:      true
 URxvt*saveLines:             10000
-URxvt*font:                  xft:fontface01:antialias:size=fontsize01
-URxvt*boldFont:              xft:fontface02:antialias:size=fontsize01
-URxvt*italicFont:            xft:fontface03:antialias:size=fontsize01
+URxvt*font:                  xft:fontface01:size=fontsize01
+URxvt*boldFont:              xft:fontface02:size=fontsize01
+URxvt*italicFont:            xft:fontface03:size=fontsize01
 URxvt*letterSpace:           0
 URxvt*lineSpace:             1
 URxvt*loginShell:            true
@@ -51,14 +50,14 @@ URxvt*depth:                 32
 URxvt*shading:               26
 URxvt*background:            [95]base00
 
-!#define fontsize02 12
-!#define fontsize03 14
-!#define fontsize04 16
-!URxvt*keysym.M-C-1:          command:\033]710;xft:fontface01:antialias=true:size=fontsize01\007\033]711;xft:fontface02:antialias=true:size=fontsize01\007
-!URxvt*keysym.M-C-2:          command:\033]710;xft:fontface01:antialias=true:size=fontsize02\007\033]711;xft:fontface02:antialias=true:size=fontsize02\007
-!URxvt*keysym.M-C-3:          command:\033]710;xft:fontface01:antialias=true:size=fontsize03\007\033]711;xft:fontface02:antialias=true:size=fontsize03\007
-!URxvt*keysym.M-C-4:          command:\033]710;xft:fontface01:antialias=true:size=fontsize04\007\033]711;xft:fontface02:antialias=true:size=fontsize04\007
+!! rofi                      bg,     fg,     bgalt,  hlbg,   hlfg
+rofi*color-normal:           base00, base05, base00, base03, base05
+!!                           bg,     bord,   sep
+rofi*color-window:           base00, base00, base0D
+rofi*font:                   Iosevka Nerd Font Mono fontsize01
+rofi*separator-style:        solid
+rofi*scrollbar-width:        2
 
 !! i3wm
-i3wm.fontface:               fontface01
-i3wm.fontsize:               fontsize01
+i3wm.fontface:               fontface02
+i3wm.fontsize:               fontsize02
