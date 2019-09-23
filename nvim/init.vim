@@ -31,13 +31,20 @@ if dein#load_state(expand(b:plugin_directory))
     call dein#add('Shougo/dein.vim')
     call dein#add('Shougo/echodoc.vim')
     call dein#add('Shougo/deoplete.nvim', { 'do' : ':UpdateRemotePlugins' })
+    call dein#add('Shougo/deoplete-lsp')
     call dein#add('Shougo/neco-vim')
     call dein#add('Shougo/neoinclude.vim')
-    call dein#add('zchee/deoplete-clang')
-    call dein#add('zchee/deoplete-zsh')
+    call dein#add('rust-lang/rust.vim')
+    call dein#add('racer-rust/vim-racer')
+    call dein#add('w0rp/ale')
+    call dein#add('deoplete-plugins/deoplete-clang')
+    call dein#add('deoplete-plugins/deoplete-jedi')
+    call dein#add('deoplete-plugins/deoplete-zsh')
     call dein#add('wellle/tmux-complete.vim')
     call dein#add('haya14busa/dein-command.vim')
     call dein#add('chriskempson/base16-vim')
+    " call dein#add('airblade/vim-gitgutter')
+    call dein#add('airblade/vim-rooter')
     call dein#add('tpope/vim-abolish')
     call dein#add('tpope/vim-dispatch')
     " call dein#add('tpope/vim-endwise')
@@ -53,10 +60,11 @@ if dein#load_state(expand(b:plugin_directory))
     call dein#add('junegunn/limelight.vim')
     call dein#add('junegunn/goyo.vim')
     call dein#add('derekwyatt/vim-fswitch')
-    call dein#add('vim-airline/vim-airline')
-    call dein#add('vim-airline/vim-airline-themes')
+    call dein#add('itchyny/lightline.vim')
     call dein#add('gilligan/vim-lldb')
     call dein#add('PotatoesMaster/i3-vim-syntax')
+    call dein#add('beyondmarc/glsl.vim')
+    call dein#add('baskerville/vim-sxhkdrc')
     call dein#add('Tetralux/odin.vim')
 " }}}
 
@@ -77,7 +85,7 @@ syntax enable
 
 set autowrite
 set background=dark
-set colorcolumn=+1
+set colorcolumn=101
 set complete=.,w,b,u,i,d,t
 set completeopt=menu
 set confirm
@@ -115,7 +123,8 @@ set smartindent
 set softtabstop=4
 set splitbelow
 set splitright
-set textwidth=100
+set textwidth=0
+set undofile
 set wildmenu
 set wildmode=list:longest
 
@@ -148,6 +157,12 @@ augroup END
 augroup AutoWrite
     autocmd!
     autocmd BufLeave,FocusLost * silent! update
+augroup END
+
+" auto rebalance windows on resize
+augroup ResizeWindows
+    autocmd!
+    autocmd VimResized * wincmd =
 augroup END
 
 " auto open quickfix window after :make
@@ -206,6 +221,56 @@ command! -bang -nargs=* Find
             \             : fzf#vim#with_preview('right:50%:hidden', '?'),
             \     <bang>0)
 
+" cscope
+function! s:load_cscope()
+    if has("cscope")
+        let db = findfile("cscope.out", ".;")
+        if (!empty(db))
+            let path = strpart(db, 0, match(db, "/cscope.out$"))
+            set nocscopeverbose
+            exec "silent cscope add " . db . " " . path
+            set cscopeverbose
+        elseif $CSCOPE_DB != ""
+            silent cscope add $CSCOPE_DB
+        endif
+    endif
+endfunction
+
+" c
+"let g:c_syntax_for_h = 1
+
+" rust
+let g:racer_cmd = $HOME . "/.cargo/bin/racer"
+let g:racer_experimental_completer = 1
+let g:rustfmt_autosave = 1
+let $RUST_SRC_PATH = systemlist("rustc --print sysroot")[0] . "/lib/rustlib/src/rust/src"
+
+" linter
+let g:ale_lint_on_text_changed = 0
+let g:ale_lint_on_insert_leave = 0
+let g:ale_lint_on_enter = 1
+let g:ale_lint_on_save = 1
+let g:ale_virtualtext_cursor = 1
+let g:ale_linters = { 'rust': ['rls'], 'c': ['clangd'], 'cpp': ['clangd'] }
+let g:ale_c_clangd_options = '-I./include'
+let g:ale_cpp_clangd_options = g:ale_c_clangd_options
+let g:ale_rust_rls_toolchain = ''
+let g:ale_rust_rls_config = { 'rust': { 'clippy_preference': 'on' } }
+
+" echodoc
+let g:echodoc#enable_at_startup = 1
+
+" deoplete
+let g:deoplete#enable_at_startup = 1
+call g:deoplete#custom#option('auto_complete_delay', 0)
+
+" deoplete-clang
+let g:deoplete#sources#clang#libclang_path = '/usr/lib/libclang.so'
+let g:deoplete#sources#clang#clang_header = '/usr/lib/clang'
+
+" tmux-complete
+let g:tmuxcomplete#trigger = ''
+
 " goyo/limelight
 let g:limelight_priority = -1
 
@@ -224,41 +289,11 @@ function! s:goyo_leave()
     Limelight!
 endfunction
 
-" echodoc
-let g:echodoc#enable_at_startup = 1
-
-" deoplete
-let g:deoplete#enable_at_startup = 1
-call g:deoplete#custom#option('auto_complete_delay', 0)
-
-" deoplete-clang
-let g:deoplete#sources#clang#libclang_path = '/usr/lib/libclang.so'
-let g:deoplete#sources#clang#clang_header = '/usr/lib/clang'
-
-" tmux-complete
-let g:tmuxcomplete#trigger = ''
-
-" cscope
-function! s:load_cscope()
-    if has("cscope")
-        let db = findfile("cscope.out", ".;")
-        if (!empty(db))
-            let path = strpart(db, 0, match(db, "/cscope.out$"))
-            set nocscopeverbose
-            exec "silent cscope add " . db . " " . path
-            set cscopeverbose
-        elseif $CSCOPE_DB != ""
-            silent cscope add $CSCOPE_DB
-        endif
-    endif
-endfunction
-
 autocmd! User GoyoEnter nested call <SID>goyo_enter()
 autocmd! User GoyoLeave nested call <SID>goyo_leave()
 
-" airline
-let g:airline_powerline_fonts = 1
-let g:airline_theme = 'base16'
+" lightline
+let g:lightline = { 'colorscheme': 'Tomorrow_Night' }
 
 " lldb
 let g:lldb_map_Lstart = "<Leader>ds"
@@ -283,8 +318,19 @@ let g:localmapleader = "\\"
 nnoremap <silent> <Leader>ev :e $MYVIMRC<CR>
 nnoremap <silent> <Leader>sv :so $MYVIMRC<CR>
 
+" edit .xinitrc and .Xresources
+nnoremap <silent> <Leader>ex :e ~/.xinitrc<CR>
+nnoremap <silent> <Leader>eX :e ~/.Xresources<CR>
+
 " edit i3 config file
 nnoremap <silent> <Leader>ei :e ~/.config/i3/config<CR>
+
+" edit bspwm/sxhkd config file
+nnoremap <silent> <Leader>eb :e ~/.config/bspwm/bspwmrc<CR>
+nnoremap <silent> <Leader>es :e ~/.config/sxhkd/sxhkdrc<CR>
+
+" edit herbstluftwm config file
+nnoremap <silent> <Leader>eh :e ~/.config/herbstluftwm/autostart<CR>
 
 " edit dwm config file
 nnoremap <silent> <Leader>ed :e ~/dtf/dwm/config.h<CR>
@@ -292,12 +338,17 @@ nnoremap <silent> <Leader>ed :e ~/dtf/dwm/config.h<CR>
 " edit zsh config file
 nnoremap <silent> <Leader>ez :e ~/.zshrc<CR>
 
-" open projects
-nnoremap <silent> <Leader>pc :e ~/src/c<CR>
-
-"save current file
+" save current file
 inoremap <C-s> <Esc>:w<CR>a
 nnoremap <C-s> :w<CR>
+
+" cut/copy/paste system clipboard
+vnoremap <Leader>y "+y
+vnoremap <Leader>d "+d
+nnoremap <Leader>p "+p
+nnoremap <Leader>P "+P
+vnoremap <Leader>p "+p
+vnoremap <Leader>P "+P
 
 " better j and k line movement
 nnoremap j gj
@@ -313,6 +364,17 @@ nnoremap <Leader>ff :Files<CR>
 nnoremap <Leader>fg :Find 
 nnoremap <Leader>fd "zyiw:execute "Find " . @z<CR>
 nnoremap <Leader>fb :Buffers<CR>
+
+" ale commands
+inoremap <silent> <C-Space> <C-\><C-O>:ALEComplete<CR>
+nnoremap <Leader>gdd :ALEGoToDefinition<CR>
+nnoremap <Leader>gds :ALEGoToDefinitionInSplit<CR>
+nnoremap <Leader>gdv :ALEGoToDefinitionInVSplit<CR>
+nnoremap <Leader>gr :ALEFindReferences<CR>
+nnoremap <Leader>gh :ALEHover<CR>
+nnoremap <Leader>gi :ALEDetail<CR>
+nnoremap <Leader>gn :ALENextWrap<CR>
+nnoremap <Leader>gp :ALEPreviousWrap<CR>
 
 " toggle goyo
 nnoremap <Leader>ng :Goyo<CR>
@@ -365,12 +427,6 @@ cnoremap jk <Esc>
 "nnoremap : ;
 "vnoremap ; :
 "vnoremap : ;
-
-" disable highlighted text
-nnoremap <silent> <Leader>nn :set hlsearch!<CR>
-
-" toggle spell check
-nnoremap <silent> <Leader>ns :set spell!<CR>
 
 " toggle syntax highlighting
 nnoremap <silent> <Leader>nt :if exists("g:syntax_on")<BAR>syntax off<BAR>else<BAR>syntax enable<BAR>endif<CR>
