@@ -95,6 +95,7 @@ set encoding=utf-8
 set expandtab
 set fileencoding=utf-8
 set fileencodings=utf-8
+set fileformat=unix
 set foldmethod=marker
 set grepprg=rg\ --vimgrep
 set hidden
@@ -156,7 +157,13 @@ augroup END
 " save file when leaving buffer or losing focus
 augroup AutoWrite
     autocmd!
-    autocmd BufLeave,FocusLost * silent! update
+    autocmd FocusLost,WinLeave * silent! update
+augroup END
+
+" reloads buffer to check for external changes when gaining focus
+augroup AutoReload
+    autocmd!
+    autocmd FocusGained,BufEnter * silent! checktime
 augroup END
 
 " auto rebalance windows on resize
@@ -236,6 +243,9 @@ function! s:load_cscope()
     endif
 endfunction
 
+" asm
+let g:asmsyntax = "nasm"
+
 " c
 "let g:c_syntax_for_h = 1
 
@@ -251,7 +261,8 @@ let g:ale_lint_on_insert_leave = 0
 let g:ale_lint_on_enter = 1
 let g:ale_lint_on_save = 1
 let g:ale_virtualtext_cursor = 1
-let g:ale_linters = { 'rust': ['rls'], 'c': ['clangd'], 'cpp': ['clangd'] }
+let g:ale_linters = { 'rust': ['rls'], 'c': ['clangd'], 'cpp': ['clangd'], 'python': ['flake8'] }
+let g:ale_fixers = { 'python': ['isort', 'yapf'] }
 let g:ale_c_clangd_options = '-I./include'
 let g:ale_cpp_clangd_options = g:ale_c_clangd_options
 let g:ale_rust_rls_toolchain = ''
@@ -375,6 +386,7 @@ nnoremap <Leader>gh :ALEHover<CR>
 nnoremap <Leader>gi :ALEDetail<CR>
 nnoremap <Leader>gn :ALENextWrap<CR>
 nnoremap <Leader>gp :ALEPreviousWrap<CR>
+nnoremap <Leader>= :ALEFix<CR>
 
 " toggle goyo
 nnoremap <Leader>ng :Goyo<CR>
