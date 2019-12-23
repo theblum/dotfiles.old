@@ -1,6 +1,6 @@
-HISTFILE="$HOME/.histfile"
-HISTSIZE=1000
-SAVEHIST=1000
+HISTFILE="$HOME/.cache/zsh/history"
+HISTSIZE=10000
+SAVEHIST=10000
 KEYTIMEOUT=10
 
 export BROWSER='qutebrowser'
@@ -12,6 +12,8 @@ export LESS=' -Ri '
 export LESSOPEN='|pygmentize -g %s'
 export MANPAGER='nvim +Man!'
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*"'
+export QT_QPA_PLATFORMTHEME=qgnomeplatform
+export VMAIL_VIM=nvim
 
 setopt autocd
 setopt beep
@@ -88,6 +90,9 @@ BASE16_SHELL_SET_BACKGROUND="false"
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 export ZSH_AUTOSUGGEST_USE_ASYNC=1
 bindkey '^ ' autosuggest-accept
+
+# pipenv completions
+eval $(pipenv --completion)
 
 # command-not-found (pkgfile)
 source /usr/share/doc/pkgfile/command-not-found.zsh
