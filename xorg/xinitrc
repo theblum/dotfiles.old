@@ -43,7 +43,7 @@ xrandr --output HDMI-0 --primary --mode 1920x1080 --rate 60 --output DVI-I-0 --m
 setxkbmap -option "ctrl:nocaps"
 xsetroot -cursor_name left_ptr
 feh -no-fehbg --bg-scale ~/pix/forest.png
-compton --daemon
+picom --daemon
 urxvtd --fork --opendisplay
 dunst &
 #dwm-status --daemon
