@@ -59,6 +59,7 @@ bindkey '^Z' fancy-ctrl-z
 alias c='cat'
 alias l='exa'
 alias ls='exa'
+alias l1='exa -1'
 alias la='exa -a'
 alias ll='exa -l'
 alias lla='exa -la'
