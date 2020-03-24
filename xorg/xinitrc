@@ -48,6 +48,7 @@ urxvtd --fork --opendisplay
 dunst &
 #dwm-status --daemon
 pasystray &
+openrazer-daemon
 
 for device in stylus eraser cursor; do
     xsetwacom --set "Wacom Intuos BT S Pen $device" MapToOutput HEAD-1
