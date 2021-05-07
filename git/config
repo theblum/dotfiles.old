@@ -11,3 +11,5 @@
 	ui = auto
 [commit]
 	verbose = true
+[pull]
+	rebase = false

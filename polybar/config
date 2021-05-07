@@ -22,7 +22,7 @@ background-alt = ${xrdb:color8}
 foreground = ${xrdb:color7}
 foreground-alt = ${xrdb:color15}
 primary = ${xrdb:color4}
-secondary = ${xrdb:color5}
+secondary = ${xrdb:color2}
 alert = ${xrdb:color1}
 
 [bar/blum]
@@ -42,25 +42,25 @@ border-size = 0
 border-color = ${colors.primary}
 
 padding-left = 0
-padding-right = 1
+padding-right = 0
 
-module-margin-left = 1
-module-margin-right = 1
+module-margin-left = 0
+module-margin-right = 0
 
-font-0 = Iosevka Nerd Font:style=Medium:antialias:pixelsize=10;0
+font-0 = Cousine Nerd Font:style=Regular:antialias:pixelsize=8;0
 font-1 = Unifont:style=Medium:antialias=false:pixelsize=10;0
 font-2 = Unifont Upper:style=Medium:antialias=false:pixelsize=10;0
 
 modules-left = i3 xwindow
 modules-center =
-modules-right = date pulseaudio powermenu
+modules-right = spotify crypto date cpu pulseaudio powermenu
 
 tray-position = right
 tray-padding = 0
 ;tray-background = ${colors.background-alt}
 
-;wm-restack = i3
-;override-redirect = true
+; wm-restack = i3
+; override-redirect = true
 
 ;scroll-up = i3wm-wsnext
 ;scroll-down = i3wm-wsprev
@@ -71,6 +71,7 @@ cursor-scroll = ns-resize
 [module/xwindow]
 type = internal/xwindow
 label = %title:0:50:...%
+label-padding = 1
 
 [module/i3]
 type = internal/i3
@@ -108,6 +109,42 @@ label-urgent-padding = 2
 ; Separator in between workspaces
 ;label-separator = |
 
+[module/cpu]
+type = internal/cpu
+interval = 0.5
+format = <label> <ramp-coreload>
+format-padding = 1
+
+label = CPU %percentage%%
+ramp-coreload-spacing = 0
+ramp-coreload-0 = ▁
+ramp-coreload-1 = ▂
+ramp-coreload-2 = ▃
+ramp-coreload-3 = ▄
+ramp-coreload-4 = ▅
+ramp-coreload-5 = ▆
+ramp-coreload-6 = ▇
+ramp-coreload-7 = █
+
+[module/spotify]
+type = custom/script
+interval = 1
+
+exec = python /usr/share/polybar/scripts/spotify_status.py -f '{artist}: {song}'
+
+format-underline = ${colors.primary}
+format-padding = 1
+
+click-left = playerctl play-pause
+click-right = playerctl next
+
+[module/crypto]
+type = custom/script
+interval = 30
+exec = echo -n "Btrx: \$$(cryptoticker --bittrex BTC-USD) | Cbse: \$$(cryptoticker --coinbase BTC-USD) | Krkn: \$$(cryptoticker --kraken XXBTZUSD)"
+format-underline = ${colors.secondary}
+format-padding = 1
+
 [module/date]
 type = internal/date
 interval = 5
@@ -128,11 +165,13 @@ label-padding = 1
 type = internal/pulseaudio
 
 format-volume = <label-volume> <bar-volume>
-label-volume = 🔊 %percentage%%
+format-volume-padding = 1
+label-volume = %percentage%%
 label-volume-foreground = ${root.foreground}
 
 label-muted = muted
 label-muted-foreground = #666
+label-muted-padding = 1
 
 bar-volume-width = 10
 bar-volume-foreground-0 = ${xrdb:color2}
@@ -156,8 +195,6 @@ type = custom/menu
 
 expand-right = false
 
-format-spacing = 1
-
 label-open = power
 label-open-padding = 0
 label-open-foreground = ${colors.primary}
@@ -165,6 +202,7 @@ label-close = cancel
 label-close-padding = 0
 label-close-foreground = ${colors.primary}
 label-separator = |
+label-separator-padding = 1
 
 menu-0-0 = reboot
 menu-0-0-exec = systemctl reboot

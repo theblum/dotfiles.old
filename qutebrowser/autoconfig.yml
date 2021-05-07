@@ -6,5 +6,5 @@
 
 config_version: 2
 settings:
-  content.notifications:
+  content.media.audio_capture:
     https://voice.google.com: true

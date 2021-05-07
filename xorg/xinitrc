@@ -42,30 +42,20 @@ fi
 xrandr --output HDMI-0 --primary --mode 1920x1080 --rate 60 --output DVI-I-0 --mode 1920x1080 --rate 60 --right-of HDMI-0
 setxkbmap -option "ctrl:nocaps"
 xsetroot -cursor_name left_ptr
-feh -no-fehbg --bg-scale ~/pix/forest.png
+feh --no-fehbg --bg-scale ~/pix/forest.png
 picom --daemon
-urxvtd --fork --opendisplay
+#urxvtd --fork --opendisplay
 dunst &
 #dwm-status --daemon
 pasystray &
-openrazer-daemon
+nvidia-settings --config="$XDG_CONFIG_HOME"/nvidia/settings --load-config-only
+#wacom_init 1
 
-for device in stylus eraser cursor; do
-    xsetwacom --set "Wacom Intuos BT S Pen $device" MapToOutput HEAD-1
-    xsetwacom --set "Wacom Intuos BT S Pen $device" Area 0 0 15200 8550
-done
-
-xsetwacom --set "Wacom Intuos BT S Pen stylus" PressureCurve 0 0 50 100
-
-xsetwacom --set "Wacom Intuos BT S Pad pad" Button 1 "key e"
-xsetwacom --set "Wacom Intuos BT S Pad pad" Button 2 "key d"
-xsetwacom --set "Wacom Intuos BT S Pad pad" Button 3 "key f"
-xsetwacom --set "Wacom Intuos BT S Pad pad" Button 8 "key c"
-xsetwacom --set "Wacom Intuos BT S Pen stylus" Button 2 "key z"
-xsetwacom --set "Wacom Intuos BT S Pen stylus" Button 3 2
 
 # start window manager
+LOGDIR="$HOME/.log/i3"
+[ -d "$LOGDIR" ] || mkdir "$LOGDIR"
 #exec dwm >~/.dwm.log 2>&1
 #exec bspwm >~/.bspwm.log 2>&1
 #exec herbstluftwm >~/.herbstluftwm.log 2>&1
-exec i3 >~/.i3.log 2>&1
+exec i3 >"$LOGDIR/i3.log" 2>&1

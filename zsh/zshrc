@@ -3,13 +3,13 @@ HISTSIZE=10000
 SAVEHIST=10000
 KEYTIMEOUT=10
 
-export BROWSER='qutebrowser'
+export BROWSER='chromium'
 export EDITOR='nvim'
 export VISUAL='nvim'
 export SUDO_ASKPASS='/usr/lib/ssh/ssh-askpass'
 export SUDO_EDITOR='nvim'
 export LESS=' -Ri '
-export LESSOPEN='|pygmentize -g %s'
+export LESSOPEN='|pygmentize -O style=inkpot -g %s'
 export MANPAGER='nvim +Man!'
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*"'
 export QT_QPA_PLATFORMTHEME=qgnomeplatform
@@ -65,6 +65,10 @@ alias ll='exa -l'
 alias lla='exa -la'
 alias q='exit'
 
+alias sl='ls'
+alias nivm='nvim'
+alias n='nvim $(fzf)'
+
 alias Psyu='sudo pacman -Syu'
 alias Psyy='sudo pacman -Syy'
 alias Ps='sudo pacman -S'
@@ -79,6 +83,11 @@ alias Pqs='pacman -Qs'
 alias Pqm='pacman -Qm'
 alias Pqmq='pacman -Qmq'
 alias Pqdt='pacman -Qdt'
+
+alias Yu='yay -Pw && yay -Syu'
+alias Yud='yay -Pw && yay -Syu --devel'
+
+alias node="env NODE_NO_READLINE=1 rlwrap node"
 
 # base16-shell
 BASE16_SHELL="$HOME/.config/base16-shell"

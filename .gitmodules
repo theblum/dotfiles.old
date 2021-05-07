@@ -1,0 +1,51 @@
+[submodule "nvim/pack/plugins/start/base16-vim"]
+	path = nvim/pack/plugins/start/base16-vim
+	url = https://github.com/chriskempson/base16-vim
+[submodule "nvim/pack/plugins/start/fzf"]
+	path = nvim/pack/plugins/start/fzf
+	url = https://github.com/junegunn/fzf
+[submodule "nvim/pack/plugins/start/fzf.vim"]
+	path = nvim/pack/plugins/start/fzf.vim
+	url = https://github.com/junegunn/fzf.vim
+[submodule "nvim/pack/plugins/start/vim-rooter"]
+	path = nvim/pack/plugins/start/vim-rooter
+	url = https://github.com/airblade/vim-rooter
+[submodule "nvim/pack/plugins/start/rust.vim"]
+	path = nvim/pack/plugins/start/rust.vim
+	url = https://github.com/rust-lang/rust.vim
+[submodule "nvim/pack/plugins/start/vim-eunuch"]
+	path = nvim/pack/plugins/start/vim-eunuch
+	url = https://github.com/tpope/vim-eunuch
+[submodule "nvim/pack/plugins/start/vim-fugitive"]
+	path = nvim/pack/plugins/start/vim-fugitive
+	url = https://github.com/tpope/vim-fugitive
+[submodule "nvim/pack/plugins/start/vim-repeat"]
+	path = nvim/pack/plugins/start/vim-repeat
+	url = https://github.com/tpope/vim-repeat
+[submodule "nvim/pack/plugins/start/vim-surround"]
+	path = nvim/pack/plugins/start/vim-surround
+	url = https://github.com/tpope/vim-surround
+[submodule "nvim/pack/plugins/start/vim-unimpaired"]
+	path = nvim/pack/plugins/start/vim-unimpaired
+	url = https://github.com/tpope/vim-unimpaired
+[submodule "nvim/pack/plugins/start/tcomment_vim"]
+	path = nvim/pack/plugins/start/tcomment_vim
+	url = https://github.com/tomtom/tcomment_vim
+[submodule "nvim/pack/plugins/start/coc.nvim"]
+	path = nvim/pack/plugins/start/coc.nvim
+	url = https://github.com/neoclide/coc.nvim
+[submodule "nvim/pack/plugins/start/lightline.vim"]
+	path = nvim/pack/plugins/start/lightline.vim
+	url = https://github.com/itchyny/lightline.vim
+[submodule "nvim/pack/plugins/start/vim-signify"]
+	path = nvim/pack/plugins/start/vim-signify
+	url = https://github.com/mhinz/vim-signify
+[submodule "nvim/pack/plugins/start/tmux-complete.vim"]
+	path = nvim/pack/plugins/start/tmux-complete.vim
+	url = https://github.com/wellle/tmux-complete.vim
+[submodule "nvim/pack/plugins/start/vim-tmux"]
+	path = nvim/pack/plugins/start/vim-tmux
+	url = https://github.com/tmux-plugins/vim-tmux
+[submodule "nvim/pack/plugins/start/vim-tmux-focus-events"]
+	path = nvim/pack/plugins/start/vim-tmux-focus-events
+	url = https://github.com/tmux-plugins/vim-tmux-focus-events
